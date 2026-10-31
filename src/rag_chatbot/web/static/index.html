@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDF RAG Chatbot</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script type="module" src="/static/js/main.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Documents and settings">
+      <header class="brand">
+        <h1>PDF RAG Chatbot</h1>
+        <p id="health-status" class="status" role="status">Connecting...</p>
+      </header>
+
+      <section aria-labelledby="upload-heading">
+        <h2 id="upload-heading">Upload PDFs</h2>
+        <label class="dropzone" id="dropzone" for="file-input">
+          <span>Drop PDFs here or click to browse</span>
+          <input id="file-input" class="visually-hidden" type="file" accept="application/pdf,.pdf" multiple>
+        </label>
+        <ul id="upload-messages" class="messages" role="status"></ul>
+      </section>
+
+      <section aria-labelledby="docs-heading">
+        <h2 id="docs-heading">Documents <span id="doc-count" class="badge">0</span></h2>
+        <ul id="doc-list" class="doc-list"></ul>
+        <p id="doc-empty" class="hint">No documents yet.</p>
+      </section>
+
+      <section aria-labelledby="settings-heading">
+        <h2 id="settings-heading">Settings</h2>
+        <form id="settings-form" class="settings">
+          <label>Model
+            <select id="model-select"></select>
+          </label>
+          <label>Passages used: <output id="top-k-value">5</output>
+            <input id="top-k" type="range" min="1" max="10" value="5">
+          </label>
+          <label class="inline"><input id="rerank" type="checkbox" checked> Rerank results</label>
+          <label class="inline"><input id="stream" type="checkbox" checked> Stream answer</label>
+          <fieldset>
+            <legend>Limit to documents (default: all)</legend>
+            <div id="doc-filter" class="doc-filter"></div>
+          </fieldset>
+        </form>
+      </section>
+    </aside>
+
+    <main class="chat">
+      <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-label="Conversation">
+        <p id="chat-empty" class="hint">Upload PDFs, wait until they are Ready, then ask a question.</p>
+      </div>
+      <form id="chat-form" class="chat-form">
+        <label for="question" class="visually-hidden">Your question</label>
+        <textarea id="question" rows="2" maxlength="2000" required
+                  placeholder="Ask a question about your PDFs (Enter to send, Shift+Enter for a new line)"></textarea>
+        <div class="actions">
+          <button type="submit" id="send-btn">Send</button>
+          <button type="button" id="stop-btn" class="secondary" hidden>Stop</button>
+          <button type="button" id="clear-btn" class="secondary">Clear chat</button>
+        </div>
+      </form>
+    </main>
+  </div>
+</body>
+</html>
