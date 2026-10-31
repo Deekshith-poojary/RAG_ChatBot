@@ -59,15 +59,6 @@ API docs: http://127.0.0.1:8000/docs
 | GET | `/llm/models` | Models on the Ollama endpoint |
 | POST | `/llm/generate` | Plain completion through Ollama (no retrieval) |
 
-## Latency tuning (target 2-5 s)
-
-- Use a small instruct model in Ollama (e.g. `llama3.2:3b`, `qwen2.5:3b`) and keep it loaded (`OLLAMA_KEEP_ALIVE`).
-- Use `/chat/stream`: first tokens arrive in about retrieval time + model time-to-first-token.
-- `RERANKER_ENABLED=false` or a smaller `RETRIEVE_CANDIDATES` saves the most on CPU; a GPU makes both cheap.
-- Stage timings (embed, search, rerank, LLM) are logged for every answer in the API console.
-- Qdrant local mode searches by exact scan, which is fast for tens of thousands of chunks. For much larger corpora run a
-  Qdrant server and set `QDRANT_URL` to get real HNSW search.
-
 ## Notes
 
 - Identical PDFs are de-duplicated by content hash; chunk ids are deterministic, so re-ingestion is idempotent.
